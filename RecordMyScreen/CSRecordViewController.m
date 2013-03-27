@@ -7,11 +7,14 @@
 //
 
 #import "CSRecordViewController.h"
+#import "CSAppDelegate.h"
 #import <IOMobileFrameBuffer.h>
 #include <sys/time.h>
 #import <CoreVideo/CVPixelBuffer.h>
 
+
 @implementation CSRecordViewController
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,7 +73,27 @@
     [self.view addSubview:_record];
     [self.view addSubview:_stop];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(record:) name:@"record" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop:) name:@"stop" object:nil];
+    
+    //CSAppDelegate *appDelegate = (CSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    //if ([appDelegate.appAction isEqualToString:@"record"]) {
+    //    [NSTimer scheduledTimerWithTimeInterval:1.0
+    //                                     target:self
+    //                                   selector:@selector(startRecording:)
+    //                                   userInfo:nil
+    //                                    repeats:NO];
+    //}
 }
+
+//- (void)startRecording:(NSTimer *)timer
+//{
+//    _record.selectedSegmentIndex = 1;
+//}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -187,6 +210,10 @@
         });
         
     });
+    
+    //NSString *stringURL = @"concurmobile:";
+    //NSURL *url = [NSURL URLWithString:stringURL];
+    //[[UIApplication sharedApplication] openURL:url];
 }
 
 - (void)stop: (id)sender {
@@ -485,6 +512,5 @@
     _videoWriterInput = nil;
     _pixelBufferAdaptor = nil;
 }
-
 
 @end

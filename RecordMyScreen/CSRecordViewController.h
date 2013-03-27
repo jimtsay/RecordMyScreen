@@ -40,6 +40,7 @@
 - (void)createScreenSurface;
 - (void)captureShot:(CMTime)frameTime;
 - (void)setupVideoContext;
+
 @end
 
 void CARenderServerRenderDisplay( kern_return_t a, CFStringRef b, IOSurfaceRef surface, int x, int y);

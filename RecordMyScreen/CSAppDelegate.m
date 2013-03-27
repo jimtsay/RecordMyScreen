@@ -17,6 +17,7 @@
 {
     [_window release];
     [_tabBarController release];
+    [_appAction release];
     [super dealloc];
 }
 
@@ -78,6 +79,21 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if (!url) { return NO; }
+    
+    self.appAction =  [url host];
+  
+    if ([self.appAction isEqualToString:@"record"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"record" object:nil];
+    } else if ([self.appAction isEqualToString:@"stop"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"stop" object:nil];
+    }
+    
+    return YES;
 }
 
 /*

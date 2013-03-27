@@ -15,4 +15,6 @@
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 
+@property (strong, nonatomic) NSString *appAction;
+
 @end
